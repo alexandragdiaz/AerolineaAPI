@@ -21,7 +21,25 @@ public class PasajeroService {
         return pasajeroRepository.findAll();
     }
 
+    public Pasajero findById(Long id) {
+        return pasajeroRepository.findById(id).orElse(null);
+    }
+
     public Pasajero save(Pasajero pasajero) {
         return pasajeroRepository.save(pasajero);
+    }
+
+    public Pasajero update(Long id, Pasajero datos) {
+        Pasajero existente = pasajeroRepository.findById(id).orElse(null);
+        if (existente == null) return null;
+        existente.setNombre(datos.getNombre());
+        existente.setApellido(datos.getApellido());
+        existente.setDocumento(datos.getDocumento());
+        existente.setEmail(datos.getEmail());
+        return pasajeroRepository.save(existente);
+    }
+
+    public void delete(Long id) {
+        pasajeroRepository.deleteById(id);
     }
 }
